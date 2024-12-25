@@ -1,0 +1,41 @@
+﻿@page
+@model meoRazor.Pages.Categories.CreateModel
+
+
+
+<form method="post">
+	 
+	<div class="container border">
+		<div class="pt-3">
+			<h3>Category</h3>
+			<hr />
+		</div>
+		<div class="row">
+			<label asp-for="category.categoryName"></label>
+			<input asp-for="category.categoryName" class="form-control" />
+			<span asp-validation-for="category.categoryName" class="text-danger"></span>
+		</div>
+		<div class="row">
+			<label asp-for="category.categoryOrder"></label>
+			<input asp-for="category.categoryOrder" class="form-control"/>
+			<span asp-validation-for="category.categoryOrder" class="text-danger"></span>
+		</div>
+		<div class="row button mt-3 pb-3">
+			<div class="col-6">
+				<button type="submit" class="btn btn-dark form-control">Create</button>
+			</div>
+			<div class="col-6">
+				<a asp-page="/Categories/Index" class="btn btn-outline-primary form-control border">Back To List</a>
+			</div>
+		</div>
+	</div>
+		   
+	
+</form>
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}
+
+
