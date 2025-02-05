@@ -21,6 +21,7 @@ namespace meo.DataAccess.Repository
 
         public void Update(Product entity)
         {
+
             _db.Update(entity);
         }
     }

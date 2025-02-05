@@ -10,12 +10,11 @@ namespace meo.Models.ViewModels
 {
     public class ProductVM
     {
+    
         public Product Product { get; set; }
+
         [ValidateNever]
         public IEnumerable<SelectListItem> CategoryList { get; set; }
-        public ProductVM()
-        {
-            Product = new Product();
-        }
+       
     }
 }

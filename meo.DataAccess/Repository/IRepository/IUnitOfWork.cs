@@ -11,6 +11,12 @@ namespace meo.DataAccess.Repository.IRepository
         public ICategoryRepository Category { get;  }
         public IProductRepository Product { get; }
 
-         void Save();
+        public IShoppingCartRepository ShoppingCart { get; }
+        public IApplicationUserRepository ApplicationUser { get; }
+        public ICompanyRepository Company { get; }
+
+        public IOrderHeaderRepository OrderHeader { get; }
+        public IOrderDetailRepository OrderDetails { get; }
+        void Save();
     }
 }

@@ -1,0 +1,72 @@
+﻿@page
+@model ExternalLoginModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1 class="text-center mt-4">@ViewData["Title"]</h1>
+<h2 id="external-login-title" class="text-center text-secondary">Associate your @Model.ProviderDisplayName account</h2>
+<hr />
+
+<p id="external-login-description" class="text-info text-center">
+    You've successfully authenticated with <strong>@Model.ProviderDisplayName</strong>.
+    Please enter an email address for this site below and click the Register button to finish logging in.
+</p>
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8 col-lg-6 pb-4">
+        <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control" autocomplete="email" placeholder="Please enter your email." />
+                <label asp-for="Input.Email">Email Address</label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Name" class="form-control" autocomplete="name" placeholder="Please enter your name." />
+                <label asp-for="Input.Name">Name</label>
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.phoneNumber" class="form-control" autocomplete="phone-number" placeholder="Please enter your phone number." />
+                <label asp-for="Input.phoneNumber">Phone Number</label>
+                <span asp-validation-for="Input.phoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.city" class="form-control" autocomplete="city" placeholder="Please enter your city." />
+                <label asp-for="Input.city">City</label>
+                <span asp-validation-for="Input.city" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.state" class="form-control" autocomplete="state" placeholder="Please enter your state." />
+                <label asp-for="Input.state">State</label>
+                <span asp-validation-for="Input.state" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.portalCode" class="form-control" autocomplete="postalCode" placeholder="Please enter your postal code." />
+                <label asp-for="Input.portalCode">Postal Code</label>
+                <span asp-validation-for="Input.portalCode" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.streetAddress" class="form-control" autocomplete="streetAddress" placeholder="Please enter your street address." />
+                <label asp-for="Input.streetAddress">Street Address</label>
+                <span asp-validation-for="Input.streetAddress" class="text-danger"></span>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">Register</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

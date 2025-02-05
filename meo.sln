@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "meo.DataAccess", "meo.DataA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "meo.Models", "meo.Models\meo.Models.csproj", "{4F40436B-7E96-40AA-B2C4-A17CABC223DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "meo.Utility", "meo.Utility\meo.Utility.csproj", "{74734E96-2208-48F2-B64B-1D80C2519704}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "meo.Utility", "meo.Utility\meo.Utility.csproj", "{8B9A2AEB-4B19-4CD5-9407-607D45E50B9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{4F40436B-7E96-40AA-B2C4-A17CABC223DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F40436B-7E96-40AA-B2C4-A17CABC223DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F40436B-7E96-40AA-B2C4-A17CABC223DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{74734E96-2208-48F2-B64B-1D80C2519704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{74734E96-2208-48F2-B64B-1D80C2519704}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{74734E96-2208-48F2-B64B-1D80C2519704}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{74734E96-2208-48F2-B64B-1D80C2519704}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B9A2AEB-4B19-4CD5-9407-607D45E50B9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B9A2AEB-4B19-4CD5-9407-607D45E50B9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B9A2AEB-4B19-4CD5-9407-607D45E50B9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B9A2AEB-4B19-4CD5-9407-607D45E50B9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

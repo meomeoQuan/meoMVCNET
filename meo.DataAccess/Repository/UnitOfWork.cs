@@ -12,12 +12,27 @@ namespace meo.DataAccess.Repository
     {
         public ICategoryRepository Category {  get; private set; }
         public IProductRepository Product { get; private set; }
+
+        public IShoppingCartRepository ShoppingCart { get; private set; }
+        public ICompanyRepository Company {  get; private set; }
+
+        public IApplicationUserRepository ApplicationUser {  get; private set; }
+
+        public IOrderHeaderRepository OrderHeader { get; private set; }
+
+        public IOrderDetailRepository OrderDetails { get; private set; }
+
         private ApplicationDbContext _db;
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Category = new CategoryReposition(_db);
             Product = new ProductReposition(_db);
+            Company = new CompanyRepository(_db);
+            ShoppingCart = new ShoppingCartRepository(_db);
+            ApplicationUser = new ApplicationUserRepository(_db);
+            OrderHeader = new OrderHeaderReposition(_db);
+            OrderDetails = new OrderDetailReposition(_db);
         }
 
         public void Save()

@@ -1,54 +1,32 @@
 ﻿@model List<Product>
 
-@* <partial name="_Notification" /> *@
-
-
-<table class="table table-bordered table-striped">
-    <div class="container pt-3 pb-2">
-        <div class="row">
-            <div class="col-6">
-                <h1>Product</h1>
-            </div>
-            <div class="col-6 text-end">
-                <a asp-controller="Product" asp-action="UpSert" class="btn btn-dark">
-                    <i class="bi bi-plus-square-fill"></i> Add Product
-                </a>
-            </div>
+<div class="container pt-3 pb-5">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h1 class="mb-0">Products</h1>
+        </div>
+        <div class="col-md-6 text-md-end mt-2 mt-md-0">
+            <a asp-controller="Product" asp-action="UpSert" class="btn btn-dark">
+                <i class="bi bi-plus-square-fill"></i> Add Product
+            </a>
         </div>
     </div>
-
-   
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>ISBN</th>
-            <th>ListPrice</th>
-            <th>Category</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var obj in Model)
-        {
+    <table id="tblData" class="table table-bordered table-striped">
+        <thead>
             <tr>
-                <td>@obj.Title</td>
-                <td>@obj.Author</td>
-                <td>@obj.ISBN</td>
-                <td>@obj.ListPrice</td>
-                <td></td>
-                <td>
-                    <div class="w-75 btn-group" role="group">
-                        <a asp-controller="Product" asp-action="UpSert" asp-route-id="@obj.Id" class="btn btn-dark mx-2">
-                            Edit
-                        </a>
-                        <form asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id" method="post" class="d-inline mx-2">
-                            <button type="submit" class="btn btn-danger " onclick="return confirm('Are you sure you want to delete this Product?');">
-                                Delete
-                            </button>
-                        </form>
-                    </div>
-                </td>
+                <th>Title</th>
+                <th>Author</th>
+                <th>ISBN</th>
+                <th>List Price</th>
+                <th>Category</th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+    </table>
+</div>
+
+
+
+@section Scripts {
+    <script src="~/js/product.js"></script>
+}
