@@ -26,6 +26,8 @@ namespace meo.Models
         public string? TrackingNumber { get; set; }
         public string? Carrier { get; set; }
 
+        public string? SessionId { get; set; }
+       
         public DateTime PaymentDate { get; set; }
         public DateTime PaymentDueDate { get; set; }
 
@@ -34,13 +36,13 @@ namespace meo.Models
         [Required]
         public string name { get; set; }
         [Required]
-        public string? streetAddress { get; set; }
+        public string streetAddress { get; set; }
         [Required]
-        public string? city { get; set; }
+        public string city { get; set; }
         [Required]
-        public string? state { get; set; }
+        public string state { get; set; }
         [Required]
-        public string? portalCode { get; set; }
+        public string portalCode { get; set; }
 
         [Required]
         public string phoneNumber { get; set; }

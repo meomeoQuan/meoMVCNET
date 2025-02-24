@@ -31,6 +31,7 @@ namespace meo.Models
 
         [NotMapped]
         public string Role { get; set; }
+      
 
     }
 }

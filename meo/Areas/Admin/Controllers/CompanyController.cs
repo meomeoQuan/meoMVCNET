@@ -53,10 +53,13 @@ namespace meo.Areas.Admin.Controllers
 
                 if (file != null)
                 {
+                    // k2h13u5hiu12y3413kj4134.jpg
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string companyPath = Path.Combine(webRootPath, @"images\company");
-
+                    // :c:\wwwroot\images\company
                     if (!string.IsNullOrEmpty(company.companyImage)) {
+
+                        //retrie in dbs the image path then take the path and delete the file if it already exist 
 
                         string oldPath = Path.Combine(webRootPath, company.companyImage.TrimStart('\\'));
                         if(System.IO.File.Exists(oldPath))
@@ -66,12 +69,14 @@ namespace meo.Areas.Admin.Controllers
                     
                     }
 
-
-                    using(var fileStream = new FileStream(Path.Combine(companyPath,fileName),FileMode.Create))
+                    // c:\wwwroot\images\company\k2h13u5hiu12y3413kj4134.jpg
+                    using (var fileStream = new FileStream(Path.Combine(companyPath,fileName),FileMode.Create))
                     {
                         file.CopyTo(fileStream);
                     }
                     company.companyImage = Path.Combine(@"\images\company\", fileName);
+                    // \images\company\k2h13u5hiu12y3413kj4134.jpg -> this is the path that will be saved in the database
+
                 }
 
 

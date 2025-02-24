@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using meo.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -59,6 +60,34 @@ namespace meo.Areas.Identity.Pages.Account
                     // Don't reveal that the user does not exist or is not confirmed
                     return RedirectToPage("./ForgotPasswordConfirmation");
                 }
+
+
+
+                var coolDownTime = TimeSpan.FromSeconds(30);
+                var now = DateTimeOffset.UtcNow;
+
+                if(user.LockoutEnd.HasValue && user.LockoutEnd.Value > now)
+                {
+                    ModelState.AddModelError("Input.Email", "You can only request a password reset every 5 minutes.");
+                    TempData["Error"] = "You can only request a password reset every 5 minutes.";
+                    return Page();
+                }
+
+                await _userManager.ResetAccessFailedCountAsync(user);
+
+                if( await _userManager.GetAccessFailedCountAsync(user) > 1)
+                {
+                    await _userManager.SetLockoutEndDateAsync(user, now.Add(coolDownTime));
+                }
+
+
+
+
+
+
+
+
+
 
                 // For more information on how to enable account confirmation and password reset please
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713

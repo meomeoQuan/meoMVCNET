@@ -389,6 +389,9 @@ namespace meo.DataAccess.Migrations
                     b.Property<string>("PaymentStatus")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SessionId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TrackingNumber")
                         .HasColumnType("nvarchar(max)");
 

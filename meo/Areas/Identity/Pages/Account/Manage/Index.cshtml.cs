@@ -72,6 +72,7 @@ namespace meo.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
             public string? userImage { get; set; }
+            public string UserId { get; set; } 
         }
 
         private async Task LoadAsync(IdentityUser user)
@@ -83,9 +84,9 @@ namespace meo.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
-                ,
-                userImage = userImage
+                PhoneNumber = phoneNumber  ,
+                userImage = userImage,
+                UserId = user.Id
             };
         }
 
@@ -98,6 +99,7 @@ namespace meo.Areas.Identity.Pages.Account.Manage
             }
 
             await LoadAsync(user);
+         
             return Page();
         }
 
@@ -143,7 +145,7 @@ namespace meo.Areas.Identity.Pages.Account.Manage
                     {
                         file.CopyTo(fileStream);
                     }
-                     applicationUser.userImage = @"\images\product\" + fileName;
+                     applicationUser.userImage = @"\images\user\" + fileName;
                 _unitOfWork.ApplicationUser.Update(applicationUser);
                 _unitOfWork.Save();
 

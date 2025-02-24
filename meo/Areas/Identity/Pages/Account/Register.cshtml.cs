@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace meo.Areas.Identity.Pages.Account
@@ -166,6 +167,16 @@ namespace meo.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            var currentlyUser =  _userManager.GetUserId(User);
+
+
+            var existingUser = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == Input.phoneNumber && u.Id != currentlyUser);
+            if (existingUser != null)
+            {
+                ModelState.AddModelError("Input.phoneNumber", "Phone Number is already in use");
+            }
+
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
@@ -176,6 +187,7 @@ namespace meo.Areas.Identity.Pages.Account
                 user.streetAddress = Input.streetAddress;
                 user.name = Input.Name;
                 user.city = Input.city;
+                
                 user.PhoneNumber = Input.phoneNumber;
                 user.state = Input.state;
                 user.portalCode = Input.portalCode;
@@ -216,8 +228,10 @@ namespace meo.Areas.Identity.Pages.Account
                         protocol: Request.Scheme);
 
                     string encodedUrl = Uri.EscapeUriString(callbackUrl);
-                    await _emailSender.SendEmailAsync(user.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{encodedUrl}'>clicking here</a>.");
+                    string emailBody = $"Please confirm your account by <a href='{encodedUrl}'>clicking here</a>.";
+                    await _emailSender.SendEmailAsync(user.Email, "Confirm your email", emailBody);
+
+
 
 
 

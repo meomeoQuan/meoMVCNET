@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace meo.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class LatestUpdateDbs : Migration
+    public partial class AddLatestToDbs : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -245,6 +245,7 @@ namespace meo.DataAccess.Migrations
                     PaymentStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TrackingNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Carrier = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SessionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PaymentDueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PaymentIntentId = table.Column<string>(type: "nvarchar(max)", nullable: true),

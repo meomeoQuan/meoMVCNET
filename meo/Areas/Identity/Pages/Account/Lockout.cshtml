@@ -2,9 +2,44 @@
 @model LockoutModel
 @{
     ViewData["Title"] = "Locked out";
+    var lockoutEndString = Model.LockoutEnd?.UtcDateTime.ToString("O") ?? "";
 }
 
 <header>
     <h1 class="text-danger">@ViewData["Title"]</h1>
     <p class="text-danger">This account has been locked out, please try again later.</p>
+    <p id="countdown" class="text-danger">
+        Time remaining: <span id="time-left"></span>
+    </p>
 </header>
+
+@section Scripts {
+    <script>
+        function getCookie(name) {
+            let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+            return match ? decodeURIComponent(match[2]) : null;
+        }
+
+        let lockoutEnd = getCookie("LockoutEnd");
+        if (lockoutEnd) {
+            let lockoutTime = new Date(lockoutEnd).getTime();
+            let now = new Date().getTime();
+            let timeLeft = Math.max(0, (lockoutTime - now) / 1000);
+
+            function updateTimer() {
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = Math.floor(timeLeft % 60);
+                document.getElementById("time-left").innerText = minutes + "m " + seconds + "s";
+
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    setTimeout(updateTimer, 1000);
+                } else {
+                    window.location.href = "/Identity/Account/Login";
+                }
+            }
+
+            updateTimer();
+        }
+    </script>
+}

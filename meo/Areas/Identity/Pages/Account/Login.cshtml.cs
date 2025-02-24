@@ -14,18 +14,21 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace meo.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, UserManager<IdentityUser> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -109,32 +112,66 @@ namespace meo.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
-                }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
-                }
-                else
+                var user = await _userManager.FindByEmailAsync(Input.Email);
+                if (user == null)
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
+
+                // Check if the user is already locked out
+                if (await _userManager.IsLockedOutAsync(user))
+                {
+                    _logger.LogWarning("User account locked out.");
+                    return RedirectToPage("./Lockout");
+                }
+
+                // Attempt to sign in the user
+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User logged in.");
+                    await _userManager.ResetAccessFailedCountAsync(user); // Reset failed attempts after successful login
+                    return LocalRedirect(returnUrl);
+                }
+
+                if (result.RequiresTwoFactor)
+                {
+                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                }
+
+                if (result.IsLockedOut)
+                {
+                    _logger.LogWarning("User account locked out.");
+                    //HttpContext.Session.SetString("UserId", user.Id);
+
+                    return RedirectToPage("./Lockout", new  { userId = user.Id});
+                }
+
+                // If login failed, check failed attempts
+                int failedAttempts = await _userManager.GetAccessFailedCountAsync(user);
+
+                if (failedAttempts == 3)
+                {
+                    await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow.AddSeconds(30)); // 30-second lockout
+                    ModelState.AddModelError(string.Empty, "Too many failed attempts. Try again after 30 seconds.");
+                }
+                else if (failedAttempts >= 5)
+                {
+                    await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow.AddMinutes(5)); // 5-minute lockout
+                    ModelState.AddModelError(string.Empty, "Too many failed attempts. Try again after 5 minutes.");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                }
+
+                return Page();
             }
 
-            // If we got this far, something failed, redisplay form
             return Page();
         }
+
     }
 }

@@ -12,8 +12,8 @@ using meo.DataAccess.Data;
 namespace meo.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250204151650_LatestUpdateDbs")]
-    partial class LatestUpdateDbs
+    [Migration("20250223094339_AddLatestToDbs")]
+    partial class AddLatestToDbs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -390,6 +390,9 @@ namespace meo.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PaymentStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SessionId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrackingNumber")

@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\meo.Models\meo.Models.csproj" />
+    <ProjectReference Include="..\meo.Utility\meo.Utility.csproj" />
   </ItemGroup>
 
 </Project>
